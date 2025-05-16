@@ -14,4 +14,3 @@ export default function registerMatchEvents(socket) {
         socket.emit("match:reset");
     });
 }
-

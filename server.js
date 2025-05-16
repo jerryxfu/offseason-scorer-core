@@ -7,6 +7,7 @@ import {Server} from "socket.io";
 import indexRouter from "./routes/index.js";
 import registerScoringEvents from "./events/score.js";
 import registerMatchEvents from "./events/match.js";
+import os from "os";
 
 const app = express();
 const server = createServer(app);
@@ -46,5 +47,18 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+const interfaces = os.networkInterfaces();
+const ips = [];
+
+for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+        if (iface.family === "IPv4" && !iface.internal) {
+            ips.push(iface.address);
+        }
+    }
+}
+
+console.log("Local IP addresses:", ips);
 
 export {server, io};
