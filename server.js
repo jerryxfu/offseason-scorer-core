@@ -8,6 +8,7 @@ import indexRouter from "./routes/index.js";
 import registerScoringEvents from "./events/score.js";
 import registerMatchEvents from "./events/match.js";
 import os from "os";
+import chalk from "chalk";
 
 const app = express();
 const server = createServer(app);
@@ -32,20 +33,20 @@ app.use(cookieParser());
 app.use("/", indexRouter);
 
 io.on("connection", (socket) => {
-    console.log("A user connected");
+    console.log(chalk.green("A user connected"));
 
     registerScoringEvents(socket);
     registerMatchEvents(socket);
 
     socket.on("disconnect", () => {
-        console.log("A user disconnected");
+        console.log(chalk.red("A user disconnected"));
     });
 });
 
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(chalk.green(`Server is running on http://localhost:${PORT}`));
 });
 
 const interfaces = os.networkInterfaces();
