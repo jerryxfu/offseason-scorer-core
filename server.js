@@ -35,9 +35,9 @@ app.use("/", indexRouter);
 io.on("connection", (socket) => {
     console.log(chalk.green("A user connected"));
 
-    socket.onAny((event, ...args) => {
-        console.log(`got event ${event}`);
-    });
+    // socket.onAny((event, ...args) => {
+    //     console.log(`received: ${event}`);
+    // });
 
     registerScoringEvents(socket);
     registerMatchEvents(socket);
