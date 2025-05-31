@@ -1,8 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import {createServer} from "http";
-import {Server} from "socket.io";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 import indexRouter from "./routes/index.js";
 import registerScoringEvents from "./events/score.js";
@@ -26,7 +26,7 @@ const io = new Server(server, {
 // Middleware
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Routes
@@ -36,8 +36,8 @@ io.on("connection", (socket) => {
     console.log(chalk.green("A user connected"));
 
     socket.onAny((event, ...args) => {
-    console.log(`got event ${event}`);
-  });
+        console.log(`got event ${event}`);
+    });
 
     registerScoringEvents(socket);
     registerMatchEvents(socket);
@@ -66,4 +66,4 @@ for (const name of Object.keys(interfaces)) {
 
 console.log("Local IP addresses:", ips);
 
-export {server, io};
+export { server, io };

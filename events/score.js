@@ -14,11 +14,12 @@ export default function registerScoreEvents(socket) {
         "score.penalty:set",
         "score.foul:add",
         "score.foul:remove",
+        "score.endgame:set"
     ]
 
     score_events.forEach((eventName) => {
         socket.on(eventName, (data) => {
-            console.log(`Score updated for alliance ${data.alliance === "blue" ? chalk.blue(data.alliance) : chalk.red(data.alliance)} ${data.toString()}`);
+            console.log(`Score updated for alliance ${data.alliance === "blue" ? chalk.blue(data.alliance) : chalk.red(data.alliance)} ${JSON.stringify(data)}`);
             socket.broadcast.emit(eventName, data);
             socket.emit("score:ack", "ACK score update sent");
         })
